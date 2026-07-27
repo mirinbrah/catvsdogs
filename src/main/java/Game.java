@@ -18,6 +18,7 @@ public class Game {
         System.out.println("введите грозность собаки");
         int dogFormidability = input.nextInt();//
         input.nextLine();
+
         Dog sobaka=CreateDog( dogName, dogAge, dogCourage, dogFormidability);
         System.out.println("введите имя кота:");
         String catName=input.nextLine();//

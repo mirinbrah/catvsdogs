@@ -35,5 +35,23 @@ public class Animal {
         return type;
     }
 
+    public void setCourage(int courage){
+            this.courage=courage;
 
+    }
+
+    public void fight(Animal enemy){
+        int newCourage=getCourage()-enemy.getFormidability();
+        if (newCourage<0){
+            newCourage=0;
+        }
+        setCourage(newCourage);
+    }
+    public boolean isFleeing(){
+        return getCourage()<=0;
+    }
+    public void show(){
+        System.out.println(getName()+" состояние: "
+        +getCourage());
+    }
 }

@@ -8,6 +8,7 @@ public class Game {
     }
 
     public void gameStart() {
+        Field.draw();
         System.out.println("Начало игры, сейчас вы создадите кошку и собаку");
         System.out.println("введите имя собаки");
         String dogName = input.nextLine();
@@ -38,9 +39,9 @@ public class Game {
             koshka.show();
         }
         if(koshka.isFleeing()){
-            System.out.println("собака победила");
+            System.out.println(" кошка сбежала собака победила");
         } else {
-            System.out.println("кошка победила");
+            System.out.println(" собака сбежала кошка победила");
         }
     }
 

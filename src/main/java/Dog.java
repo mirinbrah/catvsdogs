@@ -3,6 +3,7 @@ public class Dog extends Animal{
                int age,
                int courage,
                int formidability){
+
         super(name,age,courage,formidability);
         this.type = "Dog";
     }

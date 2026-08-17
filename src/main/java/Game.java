@@ -1,14 +1,18 @@
 import java.util.Scanner;
 
 public class Game {
-    Scanner input = new Scanner(System.in);
+    private static final int CAT_START_X = 0;
+    private static final int CAT_START_Y = 0;
+    private static final int DOG_START_X = Field.SIZE - 1;
+    private static final int DOG_START_Y = Field.SIZE - 1;
+
+    private final Scanner input = new Scanner(System.in);
 
     public void run() {
         gameStart();
     }
 
     public void gameStart() {
-        Field.draw();
         System.out.println("Начало игры, сейчас вы создадите кошку и собаку");
         System.out.println("введите имя собаки");
         String dogName = input.nextLine();
@@ -20,7 +24,7 @@ public class Game {
         int dogFormidability = input.nextInt();//
         input.nextLine();
 
-        Dog sobaka=CreateDog( dogName, dogAge, dogCourage, dogFormidability);
+        Dog sobaka = createDog(dogName, dogAge, dogCourage, dogFormidability);
         System.out.println("введите имя кота:");
         String catName=input.nextLine();//
         System.out.println("введите возраст кота:");
@@ -29,24 +33,64 @@ public class Game {
         int catCourage = input.nextInt();//
         System.out.println("введите грозность кота");
         int catFormidability = input.nextInt();//
-        Cat koshka=CreateCat(catName, catAge, catCourage, catFormidability);
+        Cat koshka = createCat(catName, catAge, catCourage, catFormidability);
 
-        System.out.println("начинается сражение "+sobaka.getName() +" с " + koshka.getName());
-        while (!koshka.isFleeing() && !sobaka.isFleeing()){
-            koshka.fight(sobaka);
-            sobaka.show();
-            sobaka.fight(koshka);
-            koshka.show();
-        }
-        if(koshka.isFleeing()){
-            System.out.println(" кошка сбежала собака победила");
-        } else {
-            System.out.println(" собака сбежала кошка победила");
+        System.out.println("\nУправляйте котом: W - вверх, A - влево, S - вниз, D - вправо.");
+        Field.draw(koshka, sobaka);
+
+        while (true) {
+            System.out.print("Ваш ход: ");
+            String command = input.next().trim().toLowerCase();
+            if (!moveCat(koshka, command)) {
+                System.out.println("Нельзя так ходить. Используйте W, A, S или D.");
+                continue;
+            }
+
+            if (koshka.getX() == sobaka.getX() && koshka.getY() == sobaka.getY()) {
+                fight(koshka, sobaka);
+                return;
+            }
+            Field.draw(koshka, sobaka);
         }
     }
 
-    public static Dog CreateDog(String name, int age, int courage, int formidability) {
-        Dog sobaka = new Dog(name, age, courage, formidability);
+    private boolean moveCat(Cat cat, String command) {
+        int newX = cat.getX();
+        int newY = cat.getY();
+        switch (command) {
+            case "w" -> newX--;
+            case "a" -> newY--;
+            case "s" -> newX++;
+            case "d" -> newY++;
+            default -> { return false; }
+        }
+        if (newX < 0 || newX >= Field.SIZE || newY < 0 || newY >= Field.SIZE) {
+            return false;
+        }
+        cat.setX(newX);
+        cat.setY(newY);
+        return true;
+    }
+
+    private void fight(Cat cat, Dog dog) {
+        System.out.println("\nНачинается сражение " + cat.getName() + " с " + dog.getName() + "!");
+        while (!cat.isFleeing() && !dog.isFleeing()) {
+            dog.fight(cat);
+            dog.show();
+            if (!dog.isFleeing()) {
+                cat.fight(dog);
+                cat.show();
+            }
+        }
+        if (dog.isFleeing()) {
+            System.out.println("Кот победил. Игра пройдена!");
+        } else {
+            System.out.println("Собака победила. Игра проиграна!");
+        }
+    }
+
+    public static Dog createDog(String name, int age, int courage, int formidability) {
+        Dog sobaka = new Dog(name, age, courage, formidability, DOG_START_X, DOG_START_Y);
         System.out.println("создана собака со статами: "
                 + sobaka.getName()
                 + " " + sobaka.getAge()
@@ -57,8 +101,8 @@ public class Game {
 
 
 
-    public static Cat CreateCat(String name, int age, int courage, int formidability) {
-        Cat koshka = new Cat(name, age, courage, formidability);
+    public static Cat createCat(String name, int age, int courage, int formidability) {
+        Cat koshka = new Cat(name, age, courage, formidability, CAT_START_X, CAT_START_Y);
         System.out.println("создана кот со статами: "
                 + koshka.getName()
                 + " " + koshka.getAge()
@@ -68,4 +112,3 @@ public class Game {
     }
 
 }
-

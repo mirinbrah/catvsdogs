@@ -6,7 +6,6 @@ public class Animal {
     protected String type;
     protected int x;
     protected int y;
-    protected String symbol;
 
     public void setName(String name) {
         this.name = name;
@@ -48,6 +47,8 @@ public class Animal {
         this.symbol = symbol;
     }
 
+    protected String symbol;
+
     public Animal(String name,
                   int age,
                   int courage,
@@ -61,6 +62,7 @@ public class Animal {
         this.formidability = formidability;
         this.x=x;
         this.y=y;
+        this.symbol=symbol;
 
     }
 

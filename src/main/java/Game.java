@@ -93,10 +93,11 @@ private static final int CHEST_VALUE=5;
                 cat.show();
             }
         }
-        Field.draw(chest, cat, dog);
         if (dog.isFleeing()) {
+            Field.draw(chest, cat);
             System.out.println("Кот победил. Игра пройдена!");
         } else {
+            Field.draw(chest, dog);
             System.out.println("Собака победила. Игра проиграна!");
         }
 

@@ -38,7 +38,6 @@ private static final int CHEST_VALUE=5;
         Chest chest=new Chest(Field.SIZE/2,Field.SIZE/2,CHEST_VALUE);
 
         System.out.println("\nУправляйте котом: W - вверх, A - влево, S - вниз, D - вправо.");
-        Field.form();
         Field.draw(chest, koshka, sobaka);
 
         while (true) {
@@ -51,18 +50,18 @@ private static final int CHEST_VALUE=5;
             chest.take(koshka);
 
             if (koshka.getX() == sobaka.getX() && koshka.getY() == sobaka.getY()) {
-                fight(koshka, sobaka);
+                fight(koshka, sobaka, chest);
                 return;
             }
 
             sobaka.patrol();
             chest.take(sobaka);
             if (koshka.getX() == sobaka.getX() && koshka.getY() == sobaka.getY()) {
-                fight(koshka, sobaka);
+                fight(koshka, sobaka, chest);
                 return;
             }
 
-            Field.draw(koshka, sobaka);
+            Field.draw(chest, koshka, sobaka);
         }
     }
 
@@ -84,7 +83,7 @@ private static final int CHEST_VALUE=5;
         return true;
     }
 
-    private void fight(Cat cat, Dog dog) {
+    private void fight(Cat cat, Dog dog, Chest chest) {
         System.out.println("\nНачинается сражение " + cat.getName() + " с " + dog.getName() + "!");
         while (!cat.isFleeing() && !dog.isFleeing()) {
             dog.fight(cat);
@@ -94,7 +93,7 @@ private static final int CHEST_VALUE=5;
                 cat.show();
             }
         }
-        Field.draw(chest,cat,dog);
+        Field.draw(chest, cat, dog);
         if (dog.isFleeing()) {
             System.out.println("Кот победил. Игра пройдена!");
         } else {

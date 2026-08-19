@@ -1,7 +1,7 @@
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Dog extends Animal{
-    private static final int PATROL_RADIUS=5;
+    private static final int PATROL_RADIUS=3;
     private int patrolX;
     private int patrolY;
     public Dog(String name,

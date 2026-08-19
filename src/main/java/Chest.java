@@ -32,7 +32,7 @@ public class Chest {
         this.x=x;
         this.y=y;
         this.value=value;
-        this.symbol="\uD83D\uDE8E";
+        this.symbol="\uD83C\uDF81";
     }
     public boolean isTaken(){
         return taken;
@@ -42,11 +42,11 @@ public class Chest {
             taken=true;
             if (ThreadLocalRandom.current().nextBoolean()){
                 animal.setFormidability(animal.getFormidability()+this.getValue());
-                System.out.println(animal.getName()+" открыл сундук и поучил "+this.getValue()+" грозности");
+                System.out.println(animal.getName()+" открыл сундук и получил "+this.getValue()+" грозности");
             }
             else {
                 animal.setCourage(animal.getCourage()+this.getValue());
-                System.out.println(animal.getName()+" открыл сундук и поучил "+this.getValue()+" смелости");
+                System.out.println(animal.getName()+" открыл сундук и получил "+this.getValue()+" смелости");
             }
         }
     }

@@ -15,9 +15,11 @@ public class Field {
     private static void place(Animal animal) {
         grid[animal.getX()][animal.getY()] = animal.getSymbol();
     }
-private static void placeChest(Chest chest){
-        grid[chest.getX()][chest.getY()]= chest.getSymbol();
-}
+    private static void placeChest(Chest chest) {
+        if (!chest.isTaken()) {
+            grid[chest.getX()][chest.getY()] = chest.getSymbol();
+        }
+    }
 
     public static void line() {
         for (int k = 0; k < SIZE; k++) {
@@ -25,11 +27,15 @@ private static void placeChest(Chest chest){
         }
         System.out.println("+");
     }
-public static void draw(Animal... animals){
-        draw(null,animals);
-}
+    public static void draw(Animal... animals) {
+        draw(null, animals);
+    }
 
-    public static void draw(Chest сhest, Animal... animals) {
+    public static void draw(Chest chest, Animal... animals) {
+        form();
+        if (chest != null) {
+            placeChest(chest);
+        }
         for (Animal animal : animals) {
             place(animal);
         }

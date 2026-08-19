@@ -5,7 +5,7 @@ public class Game {
     private static final int CAT_START_Y = 0;
     private static final int DOG_START_X = Field.SIZE - 1;
     private static final int DOG_START_Y = Field.SIZE - 1;
-
+private static final int CHEST_VALUE=5;
     private final Scanner input = new Scanner(System.in);
 
     public void run() {
@@ -35,8 +35,11 @@ public class Game {
         int catFormidability = input.nextInt();//
         Cat koshka = createCat(catName, catAge, catCourage, catFormidability);
 
+        Chest chest=new Chest(Field.SIZE/2,Field.SIZE/2,CHEST_VALUE);
+
         System.out.println("\nУправляйте котом: W - вверх, A - влево, S - вниз, D - вправо.");
-        Field.draw(koshka, sobaka);
+        Field.form();
+        Field.draw(chest, koshka, sobaka);
 
         while (true) {
             System.out.print("Ваш ход: ");
@@ -45,11 +48,20 @@ public class Game {
                 System.out.println("Нельзя так ходить. Используйте W, A, S или D.");
                 continue;
             }
+            chest.take(koshka);
 
             if (koshka.getX() == sobaka.getX() && koshka.getY() == sobaka.getY()) {
                 fight(koshka, sobaka);
                 return;
             }
+
+            sobaka.patrol();
+            chest.take(sobaka);
+            if (koshka.getX() == sobaka.getX() && koshka.getY() == sobaka.getY()) {
+                fight(koshka, sobaka);
+                return;
+            }
+
             Field.draw(koshka, sobaka);
         }
     }
@@ -82,11 +94,13 @@ public class Game {
                 cat.show();
             }
         }
+        Field.draw(chest,cat,dog);
         if (dog.isFleeing()) {
             System.out.println("Кот победил. Игра пройдена!");
         } else {
             System.out.println("Собака победила. Игра проиграна!");
         }
+
     }
 
     public static Dog createDog(String name, int age, int courage, int formidability) {
